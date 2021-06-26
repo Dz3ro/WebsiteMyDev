@@ -1,3 +1,9 @@
+:root {
+  --nav-color-normal: #fff;
+  --nav-color-highlight: gold;
+  --nav-transition-time: 0.3s;
+}
+
 html {
   font-size: 10px;
 }
@@ -16,23 +22,79 @@ code {
     monospace;
 }
 
+/*  */
+/* this part is styling the page load animation */
+
+.page {
+  position: absolute;
+}
+
+.page-enter {
+  opacity: 0;
+  transform: scale(1.2);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/*  */
+
+.btnTemp {
+  width: 40px;
+  height: 40px;
+}
+
+fade-enter {
+  opacity: 0;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-enter-active {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-exit-active {
+  transition: opacity 2s;
+}
+
 .navbar {
   width: 100vw;
   background-color: #282729;
   height: 8rem;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
 }
 
 .section {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  border-right: 1px solid #fff;
+  border-right: 1px solid var(--nav-color-normal);
   height: 60%;
-  padding: 0 2rem;
+}
+
+.sectionHighlight {
+  cursor: pointer;
 }
 
 .navbar .section:last-child {
@@ -40,16 +102,49 @@ code {
 }
 
 .sectionPart {
-  color: #fff;
+  color: var(--nav-color-normal);
   margin: 0 1.5rem;
-  transition: color 0.5s;
-  /* transition: font-size 1s; */
+  transition: color var(--nav-transition-time),
+    font-size var(--nav-transition-time);
 }
 
-.sectionFont {
-  font-size: 4.5rem;
+.sectionIcon {
+  font-size: 2.5rem;
+  display: inline-block;
+}
+
+.sectionIconHighlight {
+  color: var(--nav-color-highlight);
+  font-size: 3rem;
 }
 
 .sectionText {
   font-size: 1.8rem;
+  display: none;
+}
+
+.sectionTextHighlight {
+  color: var(--nav-color-highlight);
+  font-size: 2rem;
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .navbar {
+    justify-content: flex-start;
+  }
+
+  .section {
+    padding: 0 2rem;
+    flex: none;
+  }
+  .sectionText {
+    font-size: 1.8rem;
+    display: inline-block;
+  }
+
+  .sectionTextHighlight {
+    font-size: 2rem;
+    display: inline-block;
+  }
 }

@@ -2,12 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import MainPage from "./Components/MainPage";
+import { BrowserRouter } from "react-router-dom";
+import App from "./Components/App";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <MainPage />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
