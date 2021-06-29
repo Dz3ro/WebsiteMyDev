@@ -14,4 +14,30 @@ const navbar = {
   },
 };
 
-export { navbar };
+const slider = {
+  buttonLeft: {
+    normal: "sliderButton sliderButtonLeft sliderButtonLeftNormal",
+    highlight: "sliderButton sliderButtonLeft sliderButtonLeftHighlight",
+    disabled: "sliderButton sliderButtonLeft sliderButtonLeftNormal",
+  },
+  buttonRight: {
+    normal: "sliderButton sliderButtonRight sliderButtonRightNormal",
+    highlight: "sliderButton sliderButtonRight sliderButtonRightHighlight",
+  },
+  buttonDescLeft: {
+    normal: "sliderDescButton sliderDescButtonLeft",
+    highlight:
+      "sliderDescButton sliderDescButtonHighlight sliderDescButtonLeft",
+    disabled: "sliderDescButton sliderDescButtonDisabled sliderDescButtonLeft",
+  },
+  buttonDescRight: {
+    normal: "sliderDescButton sliderDescButtonRight",
+    highlight:
+      "sliderDescButton sliderDescButtonHighlight sliderDescButtonRight",
+    disabled: "sliderDescButton sliderDescButtonDisabled sliderDescButtonRight",
+  },
+  slideAnimLeft: "slideAnimLeft",
+  slideAnimRight: "slideAnimRight",
+};
+
+export { navbar, slider };

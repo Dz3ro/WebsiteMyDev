@@ -1,9 +1,10 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import Navbar from "./Navbar/Navbar";
-import PageHome from "./PageMain";
-import PageContact from "./PageContact";
 import { CSSTransition } from "react-transition-group";
+import Navbar from "./Navbar/Navbar";
+import PageHome from "./Pages/PageMain";
+import PageContact from "./Pages/PageContact";
+import PageProject from "./Pages/PageProject";
 
 // function App() {
 //   return (
@@ -23,6 +24,7 @@ function App() {
   const routes = [
     { path: "/", Component: PageHome, name: "PageHome" },
     { path: "/contact", Component: PageContact, name: "PageContact" },
+    { path: "/project/:id", Component: PageProject, name: "PageProject" },
   ];
 
   return (

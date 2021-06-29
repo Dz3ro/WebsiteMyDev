@@ -47,7 +47,7 @@ class Section extends Component {
           onMouseLeave={() => this.handleMouseLeave()}
         >
           <Link to={this.props.link}>
-            <FontAwesomeIcon className={iconClass} id="test" icon={icon} />
+            <FontAwesomeIcon className={iconClass} icon={icon} />
             <span className={textClass}>{text}</span>
           </Link>
         </div>
@@ -59,7 +59,7 @@ class Section extends Component {
         onMouseLeave={() => this.handleMouseLeave()}
       >
         <a href={this.props.link} target="_blank" rel="noopener noreferrer">
-          <FontAwesomeIcon className={iconClass} id="test" icon={icon} />
+          <FontAwesomeIcon className={iconClass} icon={icon} />
           <span className={textClass}>{text}</span>
         </a>
       </div>
