@@ -40,4 +40,21 @@ const slider = {
   slideAnimRight: "slideAnimRight",
 };
 
-export { navbar, slider };
+const groupItem = {
+  normal: "listGroupItem listGroupItemNormal",
+  selected: "listGroupItem listGroupItemSelected",
+};
+
+const projectCardLinks = {
+  normal: "projectCardLinksLink projectCardLinksLinkNormal",
+  selected: "projectCardLinksLink projectCardLinksLinkHighlight",
+};
+
+const paginationStyle = {
+  normal: "paginationButton paginationButtonNormal",
+  selected: "paginationButton paginationButtonSelected",
+  disabled: "paginationButton paginationButtonDisabled",
+  hovered: "paginationButton paginationButtonHovered",
+};
+
+export { navbar, slider, groupItem, projectCardLinks, paginationStyle };

@@ -104,7 +104,7 @@ class SliderProjects extends Component {
 
     const project = this.state.projectDisplayed;
     const projects = this.state.projects;
-    const index = projects.findIndex((x) => x.id === project.id);
+    const index = projects.findIndex((x) => x._id === project._id);
     let newIndex = goLeft ? index - 1 : index + 1;
 
     if (newIndex < 0) newIndex = projects.length - 1;
@@ -174,7 +174,7 @@ class SliderProjects extends Component {
             onEntered={() => this.handleRefreshSlideReadiness()}
             classNames={slideAnimStyle}
             timeout={this.state.slideAnimTime}
-            key={project.id}
+            key={project._id}
           >
             <div className="slideContainer">
               <div className="slideContainerSmall">
