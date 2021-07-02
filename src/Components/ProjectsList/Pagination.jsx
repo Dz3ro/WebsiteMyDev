@@ -10,6 +10,9 @@ function Pagination(props) {
   for (let i = 1; i <= pagesTotal; i++) {
     pages.push(i);
   }
+
+  if (pagesTotal < 2) return null;
+
   return (
     <div className="paginationContainer">
       <button

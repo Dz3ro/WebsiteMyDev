@@ -87,7 +87,7 @@ const project10 = new Project(
   10,
   "warcraft",
   "description short xxxxx xxxxxx xxxx xxxx",
-  "description long YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+  "description long YYYYYY YYYYYY YYYYYYY YYYYYYYY YYYYYYYY YYYYYYY YYYYYY YYYYYY",
   ["Typescript", "Xamarin"],
   "https://github.com/Dz3ro/Dz3ro",
   `/project/3`,
