@@ -5,26 +5,14 @@ import Navbar from "./Navbar/Navbar";
 import PageHome from "./Pages/PageMain";
 import PageContact from "./Pages/PageContact";
 import PageProject from "./Pages/PageProject";
-
-// function App() {
-//   return (
-//     <div>
-//       <Navbar />
-//       <Switch>
-//         <Route path="/" exact component={PageHome} />
-//         <Route path="/contact" component={PageContact} />
-//       </Switch>
-//     </div>
-//   );
-// }
-
-//this function is returning routes that are using the react-transition-group animations
+import PageLogin from "./Pages/PageAdmin";
 
 function App() {
   const routes = [
     { path: "/", Component: PageHome, name: "PageHome" },
     { path: "/contact", Component: PageContact, name: "PageContact" },
     { path: "/project/:id", Component: PageProject, name: "PageProject" },
+    { path: "/admin", Component: PageLogin, name: "PageLogin" },
   ];
 
   return (

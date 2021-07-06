@@ -1,6 +1,7 @@
 :root {
   --text-color-normal: #fff;
   --background-color-main: #1f1f23;
+  --background-color-sec: #16213e;
   --nav-color-highlight: gold;
   --nav-transition-time: 0.3s;
   --nav-height: 8rem;
@@ -14,6 +15,7 @@ html {
 }
 
 body {
+  background: var(--background-color-sec);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -355,6 +357,7 @@ HAT HAS POSITION ABSOLUTE */
   justify-content: center;
   border-left: var(--projectListGroup-border);
   border-bottom: var(--projectListGroup-border);
+  background: #fff;
 }
 
 .listGroupItem {
@@ -390,6 +393,8 @@ HAT HAS POSITION ABSOLUTE */
 .searchHeader {
   font-size: 2rem;
   transition: all var(--nav-transition-time);
+  color: #fff;
+  margin: 2rem;
 }
 /*#endregion SearchToolsHeading*/
 
@@ -522,6 +527,155 @@ HAT HAS POSITION ABSOLUTE */
 .NoResultsPlaceHolder {
   font-size: 20rem;
 }
+
+/*#region PageContact */
+
+.pageContactContainer {
+  margin-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  text-align: center;
+}
+
+.contactTable {
+  display: grid;
+  width: 95%;
+  height: 100px;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 50% 50%;
+}
+
+.contactTableCell {
+  color: #fff;
+  border: 2px solid var(--text-color-normal);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconContact {
+  font-size: 3.5rem;
+}
+.contactDetails {
+  font-size: 1.3rem;
+}
+
+.iconEmail {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.detailsEmail {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.iconPhone {
+  grid-column: 1;
+  grid-row: 2;
+}
+.detailsPhone {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.msgForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.msgForm h1 {
+  color: var(--text-color-normal);
+  font-size: 3rem;
+  margin-top: 1rem;
+}
+
+.msgForm textarea {
+  outline: none;
+  border: none;
+  width: 100%;
+  height: 200px;
+  font-size: 1.5rem;
+  background: #eee;
+  border: 2px solid #555;
+  border-radius: 5px;
+}
+
+.msgForm button {
+  border: none;
+  outline: none;
+  background: #eee;
+  margin-top: 3rem;
+  width: 8rem;
+  height: 3rem;
+  font-size: 2rem;
+}
+
+.msgForm button:hover {
+  cursor: pointer;
+}
+
+.loadIcon {
+  font-size: 8rem;
+  color: #fff;
+  transition: all ease-in-out 2000ms;
+}
+
+/*#endregion PageContact */
+
+/*#region PageAdmin */
+
+.adminContainer {
+  margin-top: 8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.adminForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.adminForm input {
+  width: 25rem;
+  height: 4rem;
+  font-size: 1.5rem;
+  outline: none;
+  border-radius: 1.5rem;
+  border: none;
+  box-shadow: 0 0px 1px 1px #ccc;
+  padding: 0 2rem;
+  margin: 1rem;
+}
+
+.adminForm button {
+  border-radius: 1.5rem;
+
+  width: 9rem;
+  height: 3.5rem;
+  margin: auto;
+  margin-top: 2rem;
+  border: none;
+  outline: none;
+  background: var(--background-color-main);
+  color: var(--text-color-normal);
+}
+
+.adminForm button:hover {
+  cursor: pointer;
+}
+
+/*#endregion PageAdmin */
+
 @media only screen and (min-width: 360px) {
   /*#region Slider */
   .sliderDescButton {
@@ -561,6 +715,14 @@ HAT HAS POSITION ABSOLUTE */
   }
 
   /*#endregion SearchToolsHeading*/
+
+  /*#region PageContact */
+
+  .msgForm textarea {
+    width: 300px;
+  }
+
+  /*#endregion PageContact */
 }
 
 @media only screen and (min-width: 540px) {
@@ -770,6 +932,72 @@ HAT HAS POSITION ABSOLUTE */
     margin-left: 40rem;
   }
   /*#endregion ProjectCard */
+
+  /*#region PageContact */
+
+  .pageContactContainer {
+    margin-top: 10rem;
+  }
+
+  .contactTable {
+    width: 750px;
+    height: 100px;
+    grid-template-columns: 10% 35% 10% 10% 35%;
+    grid-template-rows: 100%;
+  }
+
+  .iconContact {
+    font-size: 4rem;
+  }
+  .contactDetails {
+    font-size: 1.8rem;
+  }
+
+  .iconEmail {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .detailsEmail {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .iconPhone {
+    grid-column: 4;
+    grid-row: 1;
+  }
+  .detailsPhone {
+    grid-column: 5;
+    grid-row: 1;
+  }
+
+  .msgForm {
+    margin-top: 4rem;
+  }
+
+  .msgForm h1 {
+    font-size: 4rem;
+  }
+
+  .msgForm textarea {
+    width: 700px;
+    height: 300px;
+    font-size: 2rem;
+  }
+
+  .msgForm button {
+    margin-top: 5rem;
+    width: 8rem;
+    height: 3rem;
+    font-size: 2rem;
+  }
+
+  .loadIcon {
+    font-size: 8rem;
+  }
+
+  /*#endregion PageContact */
 }
 
 @media only screen and (min-width: 1100px) {
@@ -876,4 +1104,24 @@ HAT HAS POSITION ABSOLUTE */
     margin-left: 1rem;
   }
   /*#endregion ProjectCard*/
+
+  /*#region PageContact */
+
+  .contactTable {
+    width: 850px;
+  }
+
+  .contactDetails {
+    font-size: 2rem;
+  }
+
+  .msgForm textarea {
+    width: 800px;
+  }
+
+  .loadIcon {
+    font-size: 8rem;
+  }
+
+  /*#endregion PageContact */
 }
