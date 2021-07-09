@@ -1,3 +1,5 @@
+import httpHandler from "./Components/httpService/httpHandler";
+
 const projects = [];
 
 class Project {
@@ -60,28 +62,6 @@ const project3 = new Project(
 );
 
 projects.push(project3);
-
-function getProjects() {
-  return projects;
-}
-
-const items = [
-  "Node",
-  "React",
-  "Entity Framework",
-  "p5",
-  "Unity",
-  "MongoDB",
-  "SQLite",
-  "MySQL",
-  "Xamarin",
-  "Redux",
-  "Typescript",
-];
-
-function getProjectTags() {
-  return items;
-}
 
 const project10 = new Project(
   10,
@@ -158,8 +138,30 @@ projectsAll.push(project18);
 projectsAll.push(project19);
 projectsAll.push(project20);
 
+function getProjects() {
+  return projects;
+}
+
+async function getProjectToolsNames() {
+  const tools = await httpHandler.getTools();
+  const dataTools = [];
+
+  for (const tool of tools.data) dataTools.push(tool.name);
+
+  return dataTools;
+}
+
+async function getProjectTools() {
+  const tools = await httpHandler.getTools();
+  const dataTools = [];
+
+  for (const tool of tools.data) dataTools.push(tool.name);
+
+  return tools.data;
+}
+
 function getProjectsAll() {
   return projectsAll;
 }
 
-export { getProjects, getProjectTags, getProjectsAll };
+export { getProjects, getProjectTools, getProjectToolsNames, getProjectsAll };

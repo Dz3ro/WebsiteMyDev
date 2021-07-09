@@ -629,9 +629,9 @@ HAT HAS POSITION ABSOLUTE */
 
 /*#endregion PageContact */
 
-/*#region PageAdmin */
+/*#region PageLogin */
 
-.adminContainer {
+.loginContainer {
   margin-top: 8rem;
   display: flex;
   flex-direction: column;
@@ -640,12 +640,17 @@ HAT HAS POSITION ABSOLUTE */
   height: 80vh;
 }
 
-.adminForm {
+.loginContainer h1,
+h2 {
+  color: #fff;
+}
+
+.loginForm {
   display: flex;
   flex-direction: column;
 }
 
-.adminForm input {
+.loginForm input {
   width: 25rem;
   height: 4rem;
   font-size: 1.5rem;
@@ -657,7 +662,7 @@ HAT HAS POSITION ABSOLUTE */
   margin: 1rem;
 }
 
-.adminForm button {
+.loginForm button {
   border-radius: 1.5rem;
 
   width: 9rem;
@@ -666,12 +671,105 @@ HAT HAS POSITION ABSOLUTE */
   margin-top: 2rem;
   border: none;
   outline: none;
-  background: var(--background-color-main);
-  color: var(--text-color-normal);
+  background: #fff;
+  color: #000;
 }
 
-.adminForm button:hover {
+.loginForm button:hover {
   cursor: pointer;
+}
+
+.wrongLogin {
+  color: red;
+  font-size: 5rem;
+}
+
+/*#endregion PageLogin */
+
+/*#region PageAdmin */
+
+.adminContainerContainer {
+  margin-top: 10rem;
+}
+.adminContainer {
+  margin-top: 8rem;
+  display: flex;
+  margin: 1rem;
+}
+
+.btnAdminPerform {
+  outline: none;
+  border: none;
+  background: #fff;
+  color: #000;
+  height: 4rem;
+  width: 10rem;
+  font-size: 2rem;
+  align-self: center;
+}
+.btnAdminPerform:hover {
+  cursor: pointer;
+}
+
+.adminSelect {
+  width: 200px;
+  height: 30px;
+  font-size: 2.5rem;
+  outline: none;
+}
+
+.adminSelect:hover {
+  cursor: pointer;
+}
+
+.adminContainer label {
+  display: inline-block;
+  height: 50%;
+  color: #fff;
+  font-size: 3rem;
+}
+
+.containerSelect {
+  width: 300px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  justify-content: center;
+  align-items: center;
+}
+
+.adminFormDetails {
+  border-top: 5px solid #fff;
+  display: flex;
+  margin-top: 10rem;
+}
+.adminFormDetailsChildContainer {
+  height: 100px;
+  width: 200px;
+}
+
+.adminFormDetailsChild {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  height: 100px;
+  width: 300px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.adminFormDetailsChild label {
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.adminFormDetailsChild input {
+  border: none;
+  outline: none;
+  width: 80%;
+  height: 30%;
+  font-size: 2rem;
 }
 
 /*#endregion PageAdmin */

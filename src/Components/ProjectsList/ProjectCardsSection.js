@@ -1,4 +1,4 @@
-import { getProjectTags, getProjectsAll } from "../../ProjectsDatabase";
+import { getProjectToolsNames, getProjectsAll } from "../../ProjectsDatabase";
 import { paginationStyle } from "../../styles";
 import React, { Component } from "react";
 import ProjectCard from "./ProjectCard";
@@ -11,7 +11,7 @@ import NoResultsImg from "./NoResultsImg";
 // shows on viewport gonna use it on animations on appear
 
 class ProjectCardsSection extends Component {
-  tagAllName = "All";
+  toolAllName = "All";
   projectsPerPage = 10;
 
   constructor(props) {
@@ -20,7 +20,7 @@ class ProjectCardsSection extends Component {
       dataProjectTags: [],
       dataProjectsList: [],
       inputText: "",
-      tags: [],
+      tools: [],
       pagesTotal: 0,
       pageActive: 0,
       projectsToDisplay: [],
@@ -28,10 +28,10 @@ class ProjectCardsSection extends Component {
     };
   }
 
-  componentDidMount() {
-    const dataProjectTags = getProjectTags();
+  async componentDidMount() {
+    const dataProjectTools = await getProjectToolsNames();
     const dataProjectsList = getProjectsAll();
-    const tags = this.createTagsArray(dataProjectTags);
+    const tools = this.createTagsArray(dataProjectTools);
     const projectsToDisplay = this.getProjectsFiltered(dataProjectsList);
     const pagesTotal = this.getPagesTotalNeed(projectsToDisplay);
     const projectsToDisplayForPage =
@@ -39,9 +39,9 @@ class ProjectCardsSection extends Component {
     const pageActive = 1;
 
     this.setState({
-      dataProjectTags,
+      dataProjectTags: dataProjectTools,
       dataProjectsList,
-      tags,
+      tools: tools,
       pagesTotal,
       pageActive,
       projectsToDisplay,
@@ -51,9 +51,9 @@ class ProjectCardsSection extends Component {
 
   getProjectsFiltered = (projects, input = null, tag = null) => {
     const projectsFilByInput = this.filterListByInputText(projects, input);
-    const projectsFilByTag = this.filterListByTags(projectsFilByInput, tag);
+    const projectsFilByTools = this.filterListByTags(projectsFilByInput, tag);
 
-    return projectsFilByTag;
+    return projectsFilByTools;
   };
 
   filterListByInputText = (projects, input) => {
@@ -70,11 +70,11 @@ class ProjectCardsSection extends Component {
     return filtered;
   };
 
-  filterListByTags = (projects, tags) => {
-    const newTags = tags ? tags : this.state.tags;
-    if (newTags.length < 2) return projects;
-    const tagAll = newTags.find((x) => x.name === this.tagAllName);
-    if (tagAll.isSelected) return projects;
+  filterListByTags = (projects, tools) => {
+    const newTools = tools ? tools : this.state.tools;
+    if (newTools.length < 2) return projects;
+    const toolAll = newTools.find((x) => x.name === this.toolAllName);
+    if (toolAll.isSelected) return projects;
 
     const projectsFiltered = projects.filter((x) => this.hasTags(x));
     return projectsFiltered;
@@ -94,34 +94,34 @@ class ProjectCardsSection extends Component {
     return pagesTotal;
   };
 
-  createTagsArray = (dataProjectTags) => {
-    if (this.state.tags.length > 1) return;
-    const tagsData = dataProjectTags;
-    let tags = [];
+  createTagsArray = (dataProjectTools) => {
+    if (this.state.tools.length > 1) return;
+    const toolsData = dataProjectTools;
+    let tools = [];
 
-    for (const tag of tagsData) tags.push({ name: tag, isSelected: false });
+    for (const tool of toolsData) tools.push({ name: tool, isSelected: false });
 
-    const all = { name: this.tagAllName, isSelected: true };
-    tags.unshift(all);
-    return tags;
+    const all = { name: this.toolAllName, isSelected: true };
+    tools.unshift(all);
+    return tools;
   };
 
   handleInputChange = (inputText) => {
     this.handleStateUpdate(inputText);
   };
 
-  handleTagSelect = (tagName) => {
-    let tags = this.state.tags;
-    const tag = tags.find((x) => x.name === tagName);
+  handleToolSelect = (toolName) => {
+    let tools = this.state.tools;
+    const tool = tools.find((x) => x.name === toolName);
 
-    if (tag.name === this.tagAllName)
-      for (const tag of tags) tag.isSelected = false;
-    else tags.find((x) => x.name === this.tagAllName).isSelected = false;
+    if (tool.name === this.toolAllName)
+      for (const tool of tools) tool.isSelected = false;
+    else tools.find((x) => x.name === this.toolAllName).isSelected = false;
 
-    tag.isSelected = !tag.isSelected;
-    tags = this.enableTagAllIfNoneSelected(tags);
+    tool.isSelected = !tool.isSelected;
+    tools = this.enableTagAllIfNoneSelected(tools);
 
-    this.handleStateUpdate(null, tags, null);
+    this.handleStateUpdate(null, tools, null);
   };
 
   handlePaginationClick = (pageNumber) => {
@@ -144,13 +144,13 @@ class ProjectCardsSection extends Component {
     this.handleStateUpdate(null, null, newPage);
   };
 
-  handleStateUpdate = (newInput = null, newTags = null, newPage = null) => {
+  handleStateUpdate = (newInput = null, newTools = null, newPage = null) => {
     // all the logic is here
     // this method is called from input tag and page change
     // variables are assigned to parameters if they are provided if then to state
 
     const inputText = newInput !== null ? newInput : this.state.inputText;
-    const tags = newTags !== null ? newTags : this.state.tags;
+    const tools = newTools !== null ? newTools : this.state.tools;
     const pageActive = newPage ? newPage : 1;
 
     let projectsToDisplay;
@@ -160,11 +160,11 @@ class ProjectCardsSection extends Component {
         this.state.dataProjectsList,
         inputText
       );
-    else if (tags !== null)
+    else if (tools !== null)
       projectsToDisplay = this.getProjectsFiltered(
         this.state.dataProjectsList,
         null,
-        tags
+        tools
       );
     else if (newPage !== null)
       projectsToDisplay = this.getProjectsFiltered(this.state.dataProjectsList);
@@ -182,7 +182,7 @@ class ProjectCardsSection extends Component {
     const pagesTotal = this.getPagesTotalNeed(projectsToDisplay);
 
     this.setState({
-      tags,
+      tools: tools,
       inputText,
       pageActive,
       pagesTotal,
@@ -191,21 +191,21 @@ class ProjectCardsSection extends Component {
     });
   };
 
-  enableTagAllIfNoneSelected = (tags) => {
-    for (const tag of tags) {
-      if (tag.isSelected) return tags;
+  enableTagAllIfNoneSelected = (tools) => {
+    for (const tool of tools) {
+      if (tool.isSelected) return tools;
     }
-    const tagAll = tags.find((x) => x.name === this.tagAllName);
+    const tagAll = tools.find((x) => x.name === this.toolAllName);
     tagAll.isSelected = true;
-    return tags;
+    return tools;
   };
 
   hasTags = (project) => {
-    const tags = this.state.tags;
-    const tagsProject = project.usedTools;
-    const tagsSelected = tags.filter((x) => x.isSelected);
-    for (const tagSelected of tagsSelected)
-      if (!tagsProject.includes(tagSelected.name)) return false;
+    const tools = this.state.tools;
+    const toolsProject = project.usedTools;
+    const toolsSelected = tools.filter((x) => x.isSelected);
+    for (const toolSelected of toolsSelected)
+      if (!toolsProject.includes(toolSelected.name)) return false;
     return true;
   };
 
@@ -228,8 +228,8 @@ class ProjectCardsSection extends Component {
           placeholder="Project name..."
         />
         <ListGroup
-          onTagSelect={(e) => this.handleTagSelect(e.name)}
-          tags={this.state.tags}
+          onTagSelect={(e) => this.handleToolSelect(e.name)}
+          tags={this.state.tools}
         />
         <NoResultsImg amount={amount} />
 

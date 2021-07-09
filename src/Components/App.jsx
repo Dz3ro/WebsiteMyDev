@@ -5,14 +5,16 @@ import Navbar from "./Navbar/Navbar";
 import PageHome from "./Pages/PageMain";
 import PageContact from "./Pages/PageContact";
 import PageProject from "./Pages/PageProject";
-import PageLogin from "./Pages/PageAdmin";
+import PageLogin from "./Pages/PageLogin";
+import PageAdmin from "./Pages/PageAdmin";
 
 function App() {
   const routes = [
     { path: "/", Component: PageHome, name: "PageHome" },
     { path: "/contact", Component: PageContact, name: "PageContact" },
     { path: "/project/:id", Component: PageProject, name: "PageProject" },
-    { path: "/admin", Component: PageLogin, name: "PageLogin" },
+    { path: "/login", Component: PageLogin, name: "PageLogin" },
+    { path: "/admin", Component: PageAdmin, name: "PageAdmin" },
   ];
 
   return (
