@@ -2,6 +2,7 @@ import axios from "axios";
 import _ from "lodash";
 
 const toolsUrl = "/tools";
+const projectsUrl = "/projects";
 const mailUrl = "/mail";
 const loginUrl = "/login";
 
@@ -26,14 +27,17 @@ const httpHandler = {
       .then(() => onSuccess())
       .catch(() => onFail());
   },
-  getTools: async function () {
-    return await instance.get(toolsUrl);
-  },
+
   login: async function (email, password, submitToCall) {
     return await instance.post(loginUrl, { email, password });
   },
+
+  toolsGet: async function () {
+    return await instance.get(toolsUrl);
+  },
   toolPost: async function (tool) {
-    return await instance.post(toolsUrl, tool);
+    const toSend = _.omit(tool, ["_id", "__v"]);
+    return await instance.post(toolsUrl, toSend);
   },
   toolUpdate: async function (tool) {
     const toolId = tool._id;
@@ -43,6 +47,35 @@ const httpHandler = {
   toolDelete: async function (tool) {
     const toolId = tool._id;
     return await instance.delete(`${toolsUrl}/${toolId}`);
+  },
+
+  projectsGet: async function () {
+    return await instance.get(projectsUrl);
+  },
+
+  projectPost: async function (project) {
+    const toSend = _.omit(project, ["_id", "__v"]);
+    const toolsArr = toSend.tools.split(",");
+    toSend.tools = toolsArr;
+    const linksArr = toSend.urlImgAll.split(",");
+    toSend.urlImgAll = linksArr;
+    return await instance.post(projectsUrl, toSend);
+  },
+
+  projectUpdate: async function (project) {
+    const projectId = project._id;
+    const toSend = _.omit(project, ["_id", "__v"]);
+    const toolsArr = toSend.tools.split(",");
+    toSend.tools = toolsArr;
+    const linksArr = toSend.urlImgAll.split(",");
+    toSend.urlImgAll = linksArr;
+    return await instance.put(`${projectsUrl}/${projectId}`, toSend);
+  },
+
+  projectDelete: async function (project) {
+    const projectId = project._id;
+    console.log(projectId);
+    return await instance.delete(`${projectsUrl}/${projectId}`);
   },
 };
 

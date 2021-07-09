@@ -28,7 +28,7 @@ class ProjectCard extends Component {
 
   getUsedToolsString = (project) => {
     if (!project) return null;
-    const tools = project.usedTools;
+    const tools = project.tools;
     let str = "";
 
     for (const tool of tools) {

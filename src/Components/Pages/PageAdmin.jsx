@@ -1,6 +1,6 @@
 import _ from "lodash";
 import React, { Component } from "react";
-import { getProjectTools } from "../../ProjectsDatabase";
+import { getProjects, getProjectTools } from "../../ProjectsDatabase";
 import Selector from "../Admin/Selector";
 import FormDetails from "../Admin/FormDetails";
 import httpHandler from "../httpService/httpHandler";
@@ -24,7 +24,7 @@ class PageAdmin extends Component {
       toolSelected: "",
       toolsSelectorVisibility: this.cssHidden,
       projects: [],
-      projectsSelected: "",
+      projectSelected: "",
       projectsSelectorVisibility: this.cssHidden,
       btnPerformVisibility: this.cssHidden,
       formDetailsVisibility: this.cssHidden,
@@ -37,19 +37,21 @@ class PageAdmin extends Component {
 
   async componentDidMount() {
     const tools = await getProjectTools();
-    this.setState({ tools });
+    const projects = await getProjects();
     this.handleComponentsVisibility();
     this.handleThingToModifyUpdate();
-    this.createSchemas(tools);
+    const toolSchema = this.getObjectSchema(tools);
+    const projectSchema = this.getObjectSchema(projects);
+    this.setState({ tools, projects, toolSchema, projectSchema });
   }
 
-  createSchemas(tools) {
-    const tool = tools[0];
-    const toolSchema = Object.keys(tool);
-    const toolSchemaFiltered = toolSchema.filter(
+  getObjectSchema(objectsDatabase) {
+    const object = objectsDatabase[0];
+    const objectSchema = Object.keys(object);
+    const objectSchemaFiltered = objectSchema.filter(
       (x) => x !== "_id" && x !== "__v"
     );
-    this.setState({ toolSchema: toolSchemaFiltered });
+    return objectSchemaFiltered;
   }
 
   componentDidUpdate() {
@@ -66,10 +68,17 @@ class PageAdmin extends Component {
     this.setState({ action: value });
   };
 
-  handleToolSelectClick = (tool) => {
-    const thingIndex = this.state.tools.findIndex((x) => x.name === tool);
-    const thing = thingIndex === -1 ? null : this.state.tools[thingIndex];
-    this.setState({ toolSelected: tool, thingToModifyUpdated: thing });
+  handleObjectSelectClick = (obj) => {
+    if (this.state.thing === this.objectNameTool) {
+      const thingIndex = this.state.tools.findIndex((x) => x.name === obj);
+      const thing = thingIndex === -1 ? null : this.state.tools[thingIndex];
+      this.setState({ toolSelected: obj, thingToModifyUpdated: thing });
+    } else if (this.state.thing === this.objectNameProject) {
+      console.log("ahgi");
+      const thingIndex = this.state.projects.findIndex((x) => x.name === obj);
+      const thing = thingIndex === -1 ? null : this.state.projects[thingIndex];
+      this.setState({ projectSelected: obj, thingToModifyUpdated: thing });
+    }
   };
 
   handleToolSelectUpdate = () => {
@@ -85,7 +94,8 @@ class PageAdmin extends Component {
 
   handleSelectorsVisibilityTool() {
     const { thing, action, toolsSelectorVisibility } = this.state;
-    const toolSelected = thing === this.objectNameTool;
+    const toolSelected =
+      thing === this.objectNameTool || this.objectNameProject;
     const putOrDel =
       action === this.actionNamePut || action === this.actionNameDelete;
     const visible = toolsSelectorVisibility === this.cssVisible;
@@ -106,7 +116,7 @@ class PageAdmin extends Component {
     const typeSelected = this.state.thing !== "";
     const visibleButton = this.state.btnPerformVisibility === this.cssVisible;
     const toolOrProjectSelected =
-      this.state.projectsSelected !== "" || this.state.toolSelected !== "";
+      this.state.projectSelected !== "" || this.state.toolSelected !== "";
 
     const posting = this.state.action === this.actionNamePost;
 
@@ -121,12 +131,25 @@ class PageAdmin extends Component {
   }
 
   handleThingToModifyUpdate() {
-    const { tools, toolSelected, thingToModify } = this.state;
-    const thingIndex = tools.findIndex((x) => x.name === toolSelected);
-    const thing = thingIndex === -1 ? null : tools[thingIndex];
+    const {
+      tools,
+      projects,
+      projectSelected: projectSelected,
+      toolSelected,
+      thingToModify,
+    } = this.state;
+    if (this.state.thing === this.objectNameTool) {
+      const thingIndex = tools.findIndex((x) => x.name === toolSelected);
+      const thing = thingIndex === -1 ? null : tools[thingIndex];
 
-    if (!_.isEqual(thingToModify, thing))
-      this.setState({ thingToModify: thing });
+      if (!_.isEqual(thingToModify, thing))
+        this.setState({ thingToModify: thing });
+    } else if (this.state.thing === this.objectNameProject) {
+      const thingIndex = projects.findIndex((x) => x.name === projectSelected);
+      const thing = thingIndex === -1 ? null : projects[thingIndex];
+      if (!_.isEqual(thingToModify, thing))
+        this.setState({ thingToModify: thing });
+    }
   }
 
   handleThingToModifyValueChange = (prop, value) => {
@@ -147,6 +170,15 @@ class PageAdmin extends Component {
       this.handleToolUpdate(thingToModifyUpdated);
     else if (thing === this.objectNameTool && action === this.actionNameDelete)
       this.handleToolDelete(thingToModifyUpdated);
+    else if (thing === this.objectNameProject && action === this.actionNamePost)
+      this.handleProjectPost(thingToModifyUpdated);
+    else if (thing === this.objectNameProject && action === this.actionNamePut)
+      this.handleProjectUpdate(thingToModifyUpdated);
+    else if (
+      thing === this.objectNameProject &&
+      action === this.actionNameDelete
+    )
+      this.handleProjectDelete(thingToModifyUpdated);
   };
 
   async handleToolPost(tool) {
@@ -179,12 +211,44 @@ class PageAdmin extends Component {
       .catch((e) => console.log(`fail ${e}`));
   }
 
+  async handleProjectPost(project) {
+    await httpHandler
+      .projectPost(project)
+      .then(() => {
+        console.log("SUCCESS");
+        window.location.reload();
+      })
+      .catch((e) => console.log(`fail ${e}`));
+  }
+
+  async handleProjectUpdate(project) {
+    await httpHandler
+      .projectUpdate(project)
+      .then(() => {
+        console.log("SUCCESS");
+        window.location.reload();
+      })
+      .catch((e) => console.log(`fail ${e}`));
+  }
+
+  async handleProjectDelete(project) {
+    await httpHandler
+      .projectDelete(project)
+      .then(() => {
+        console.log("SUCCESS");
+        window.location.reload();
+      })
+      .catch((e) => console.log(`fail ${e}`));
+  }
+
   render() {
     const {
       toolsSelectorVisibility,
       btnPerformVisibility,
       tools,
       toolSelected,
+      projects,
+      thing,
     } = this.state;
     const typeOptions = [this.objectNameProject, this.objectNameTool];
     const actionOptions = [
@@ -192,6 +256,8 @@ class PageAdmin extends Component {
       this.actionNamePut,
       this.actionNameDelete,
     ];
+
+    const options = thing === "Tool" ? tools : projects;
 
     return (
       <div className="adminContainerContainer">
@@ -211,8 +277,8 @@ class PageAdmin extends Component {
           <Selector
             visibility={toolsSelectorVisibility}
             id={"tools"}
-            options={tools}
-            onChange={this.handleToolSelectClick}
+            options={options}
+            onChange={this.handleObjectSelectClick}
           />
           <button
             onClick={() => this.handleBtnPerformLogic()}
@@ -223,6 +289,7 @@ class PageAdmin extends Component {
           </button>
         </div>
         <FormDetails
+          projectSchema={this.state.projectSchema}
           toolSchema={this.state.toolSchema}
           posting={this.state.action === this.actionNamePost}
           deleting={this.state.action === this.actionNameDelete}

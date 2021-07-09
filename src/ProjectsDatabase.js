@@ -138,12 +138,12 @@ projectsAll.push(project18);
 projectsAll.push(project19);
 projectsAll.push(project20);
 
-function getProjects() {
-  return projects;
-}
+// function getProjects() {
+//   return projects;
+// }
 
 async function getProjectToolsNames() {
-  const tools = await httpHandler.getTools();
+  const tools = await httpHandler.toolsGet();
   const dataTools = [];
 
   for (const tool of tools.data) dataTools.push(tool.name);
@@ -152,16 +152,13 @@ async function getProjectToolsNames() {
 }
 
 async function getProjectTools() {
-  const tools = await httpHandler.getTools();
-  const dataTools = [];
-
-  for (const tool of tools.data) dataTools.push(tool.name);
-
+  const tools = await httpHandler.toolsGet();
   return tools.data;
 }
 
-function getProjectsAll() {
-  return projectsAll;
+async function getProjects() {
+  const projects = await httpHandler.projectsGet();
+  return projects.data;
 }
 
-export { getProjects, getProjectTools, getProjectToolsNames, getProjectsAll };
+export { getProjects, getProjectTools, getProjectToolsNames };

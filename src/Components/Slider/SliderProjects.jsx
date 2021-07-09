@@ -42,8 +42,8 @@ class SliderProjects extends Component {
     } else this.setState({ slideAnimTime: 0 });
   }
 
-  componentDidMount() {
-    const projects = getProjects();
+  async componentDidMount() {
+    const projects = await getProjects();
 
     this.setState({
       projects: projects,
@@ -179,7 +179,7 @@ class SliderProjects extends Component {
             <div className="slideContainer">
               <div className="slideContainerSmall">
                 <SliderSlide
-                  projectImg={project.screenshootUrl}
+                  projectImg={project.urlImgMain}
                   altText={project.name}
                 />
                 <SliderDesc

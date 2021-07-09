@@ -356,11 +356,12 @@ HAT HAS POSITION ABSOLUTE */
   column-gap: 0;
   justify-content: center;
   border-left: var(--projectListGroup-border);
-  border-bottom: var(--projectListGroup-border);
-  background: #fff;
+  /* border-bottom: var(--projectListGroup-border); */
 }
 
 .listGroupItem {
+  background: #fff;
+
   height: 50px;
   overflow: hidden;
   font-size: 1rem;
@@ -374,7 +375,9 @@ HAT HAS POSITION ABSOLUTE */
 }
 
 .listGroupItemNormal {
-  background: none;
+  background: #fff;
+
+  /* background: none; */
   border-top: var(--projectListGroup-border);
   border-right: var(--projectListGroup-border);
 }

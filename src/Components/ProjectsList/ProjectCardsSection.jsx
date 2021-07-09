@@ -1,4 +1,8 @@
-import { getProjectToolsNames, getProjectsAll } from "../../ProjectsDatabase";
+import {
+  getProjectToolsNames,
+  getProjects,
+  getProjectTools,
+} from "../../ProjectsDatabase";
 import { paginationStyle } from "../../styles";
 import React, { Component } from "react";
 import ProjectCard from "./ProjectCard";
@@ -29,8 +33,9 @@ class ProjectCardsSection extends Component {
   }
 
   async componentDidMount() {
-    const dataProjectTools = await getProjectToolsNames();
-    const dataProjectsList = getProjectsAll();
+    //const dataProjectTools = await getProjectToolsNames();
+    const dataProjectTools = await getProjectTools();
+    const dataProjectsList = await getProjects();
     const tools = this.createTagsArray(dataProjectTools);
     const projectsToDisplay = this.getProjectsFiltered(dataProjectsList);
     const pagesTotal = this.getPagesTotalNeed(projectsToDisplay);
@@ -99,7 +104,8 @@ class ProjectCardsSection extends Component {
     const toolsData = dataProjectTools;
     let tools = [];
 
-    for (const tool of toolsData) tools.push({ name: tool, isSelected: false });
+    for (const tool of toolsData)
+      tools.push({ name: tool.name, isSelected: false });
 
     const all = { name: this.toolAllName, isSelected: true };
     tools.unshift(all);
@@ -202,7 +208,7 @@ class ProjectCardsSection extends Component {
 
   hasTags = (project) => {
     const tools = this.state.tools;
-    const toolsProject = project.usedTools;
+    const toolsProject = project.tools;
     const toolsSelected = tools.filter((x) => x.isSelected);
     for (const toolSelected of toolsSelected)
       if (!toolsProject.includes(toolSelected.name)) return false;

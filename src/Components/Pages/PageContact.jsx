@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMobile } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import httpHandler from "../httpService/httpHandler";
-import MailSendForm from "../MailSendForm.js/MailSendForm";
+import MailSendForm from "../MailSendForm/MailSendForm";
 
 class PageContact extends Component {
   constructor(props) {
