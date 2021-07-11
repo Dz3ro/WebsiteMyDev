@@ -61,8 +61,7 @@ class FormDetails extends Component {
   }
 
   handleInputChange = (value, prop) => {
-    const { posting, toolSchema, thingToModify, projectSchema, thingName } =
-      this.state;
+    const { posting, toolSchema, thingToModify, projectSchema } = this.state;
 
     if (this.props.thingName === "Tool") {
       const clone = posting ? _.clone(toolSchema) : _.clone(thingToModify);
@@ -80,8 +79,7 @@ class FormDetails extends Component {
   };
 
   fillArrayLogic(schema) {
-    const { thingToModify, posting, toolSchema, projectSchema, thingName } =
-      this.state;
+    const { thingToModify, posting } = this.state;
     const arr = [];
     if (posting) {
       for (const prop in schema) arr.push([prop, schema[prop]]);
@@ -92,8 +90,7 @@ class FormDetails extends Component {
     return newArr;
   }
   FillArrayTool() {
-    const { thingToModify, posting, toolSchema, projectSchema, thingName } =
-      this.state;
+    const { thingToModify, posting, toolSchema, thingName } = this.state;
     const arr = [];
     if (posting && thingName === "Tool") {
       for (const prop in toolSchema) arr.push([prop, toolSchema[prop]]);
@@ -105,15 +102,8 @@ class FormDetails extends Component {
   }
 
   render() {
-    const {
-      thingToModify,
-      putting,
-      deleting,
-      posting,
-      toolSchema,
-      projectSchema,
-      thingName,
-    } = this.state;
+    const { putting, deleting, posting, toolSchema, projectSchema, thingName } =
+      this.state;
 
     if (!this.state.thingName) return null;
 
@@ -135,7 +125,7 @@ class FormDetails extends Component {
             <label>{x[0]}</label>
             <input
               onChange={(e) => this.handleInputChange(e.target.value, x[0])}
-              value={x[1]}
+              value={x[1] === null ? "" : x[1]}
             ></input>
           </div>
         ))}

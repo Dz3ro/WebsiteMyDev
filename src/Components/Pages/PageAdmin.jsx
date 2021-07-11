@@ -131,13 +131,8 @@ class PageAdmin extends Component {
   }
 
   handleThingToModifyUpdate() {
-    const {
-      tools,
-      projects,
-      projectSelected: projectSelected,
-      toolSelected,
-      thingToModify,
-    } = this.state;
+    const { tools, projects, projectSelected, toolSelected, thingToModify } =
+      this.state;
     if (this.state.thing === this.objectNameTool) {
       const thingIndex = tools.findIndex((x) => x.name === toolSelected);
       const thing = thingIndex === -1 ? null : tools[thingIndex];
@@ -246,7 +241,6 @@ class PageAdmin extends Component {
       toolsSelectorVisibility,
       btnPerformVisibility,
       tools,
-      toolSelected,
       projects,
       thing,
     } = this.state;

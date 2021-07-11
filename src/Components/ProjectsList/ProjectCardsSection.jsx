@@ -1,8 +1,4 @@
-import {
-  getProjectToolsNames,
-  getProjects,
-  getProjectTools,
-} from "../../ProjectsDatabase";
+import { getProjects, getProjectTools } from "../../ProjectsDatabase";
 import { paginationStyle } from "../../styles";
 import React, { Component } from "react";
 import ProjectCard from "./ProjectCard";
@@ -33,7 +29,6 @@ class ProjectCardsSection extends Component {
   }
 
   async componentDidMount() {
-    //const dataProjectTools = await getProjectToolsNames();
     const dataProjectTools = await getProjectTools();
     const dataProjectsList = await getProjects();
     const tools = this.createTagsArray(dataProjectTools);
@@ -241,7 +236,7 @@ class ProjectCardsSection extends Component {
 
         <div className="projectListSection">
           {projectsToDisplayForPage.map((project) => {
-            return <ProjectCard key={project._id} data={project} />;
+            return <ProjectCard key={project._id} project={project} />;
           })}
         </div>
         <Pagination

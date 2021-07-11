@@ -141,20 +141,22 @@ code {
 
 .sliderSlide {
   width: 100%;
-  grid-row: 1;
-  grid-column: 1;
   height: 65%;
 }
 
 .sliderDesc {
   background-color: var(--background-color-main);
   width: 100%;
-  min-height: 35%;
+  height: 35%;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  /* grid-template-rows: 1fr 1fr; */
+  grid-template-rows: 40% 60%;
+
   grid-template-columns: 33.3% 33.3% 33.3%;
   justify-items: center;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .imgContainer {
@@ -255,6 +257,7 @@ code {
 
 .sliderDesc h1 {
   font-size: 1.2rem;
+
   color: var(--text-color-normal);
   grid-column: 2;
   grid-row: 1;
@@ -263,7 +266,14 @@ code {
 }
 
 .sliderDesc h2 {
-  font-size: 0.9rem;
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+
+  font-size: 0.5rem;
+
   color: var(--text-color-normal);
   grid-column: 2;
   grid-row: 2;
@@ -363,12 +373,12 @@ HAT HAS POSITION ABSOLUTE */
   background: #fff;
 
   height: 50px;
-  overflow: hidden;
   font-size: 1rem;
+  overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
   text-align: center;
   line-height: 50px;
-  text-overflow: ellipsis;
   padding: 0 0.3rem;
   user-select: none;
   transition: all var(--nav-transition-time);
@@ -428,6 +438,7 @@ HAT HAS POSITION ABSOLUTE */
   width: 100%;
   grid-row: 1;
   grid-column: 1;
+  object-fit: cover;
 }
 .projectCardContainer h1 {
   text-align: center;
@@ -444,6 +455,9 @@ HAT HAS POSITION ABSOLUTE */
   grid-row: 3;
   grid-column: 1;
   text-overflow: ellipsis;
+  overflow: hidden;
+  max-height: 100%;
+  color: #000;
 }
 
 .projectCardContainer h3 {
@@ -477,6 +491,12 @@ HAT HAS POSITION ABSOLUTE */
 .projectCardLinksLinkHighlight {
   font-size: 2rem;
   color: gold;
+}
+
+.projectCardLinksLinkDisabled {
+  cursor: inherit;
+  font-size: 1.8rem;
+  color: #aaa;
 }
 /*#endregion ProjectCard*/
 
@@ -997,7 +1017,8 @@ h2 {
     width: 70rem;
     height: 23rem;
     grid-template-columns: 1fr 30rem;
-    grid-template-rows: 40% 30% 30%;
+    /* grid-template-rows: 40% 30% 30%; */
+    grid-template-rows: 25% 50% 25%;
   }
 
   .projectCardImage {
@@ -1012,6 +1033,8 @@ h2 {
     font-size: 2.4rem;
   }
   .projectCardContainer h2 {
+    align-self: flex-start;
+
     margin: 2rem;
     letter-spacing: 2px;
     line-height: 25px;
@@ -1169,7 +1192,8 @@ h2 {
     width: 100rem;
     height: 30rem;
     grid-template-columns: 1fr 30rem;
-    grid-template-rows: 1fr 1fr 1fr;
+    /* grid-template-rows: 1fr 1fr 1fr; */
+    grid-template-rows: 25% 50% 25%;
   }
 
   .projectCardImage {
@@ -1184,6 +1208,7 @@ h2 {
     font-size: 3.5rem;
   }
   .projectCardContainer h2 {
+    align-self: flex-start;
     margin: 2rem;
     letter-spacing: 2px;
     line-height: 25px;

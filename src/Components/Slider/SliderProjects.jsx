@@ -27,6 +27,8 @@ class SliderProjects extends Component {
       buttonRightClass: "",
       buttonDescLeftClass: "",
       buttonDescRightClass: "",
+      buttonDescLeftHovered: false,
+      buttonDescRightHovered: false,
       projects: [],
       projectDisplayed: {},
       slideAnimStyle: "",
@@ -44,17 +46,56 @@ class SliderProjects extends Component {
 
   async componentDidMount() {
     const projects = await getProjects();
+    const projectDisplayed = projects[0];
+    const buttonDescLeftClass = projectDisplayed.urlLive
+      ? sliderStyles.buttonDescLeft.normal
+      : sliderStyles.buttonDescLeft.disabled;
+
+    const buttonDescRightClass = projectDisplayed.urlCode
+      ? sliderStyles.buttonDescRight.normal
+      : sliderStyles.buttonDescRight.disabled;
 
     this.setState({
       projects: projects,
-      projectDisplayed: projects[0],
+      projectDisplayed,
       buttonLeftClass: sliderStyles.buttonLeft.normal,
       buttonRightClass: sliderStyles.buttonRight.normal,
-      buttonDescLeftClass: sliderStyles.buttonDescLeft.normal,
-      buttonDescRightClass: sliderStyles.buttonDescRight.normal,
+      buttonDescLeftClass,
+      buttonDescRightClass,
       slideAnimTime: this.slideSpeed,
     });
   }
+
+  componentDidUpdate() {
+    this.setBtnsDescStyles();
+  }
+
+  setBtnsDescStyles = () => {
+    const { projectDisplayed, buttonDescLeftHovered, buttonDescRightHovered } =
+      this.state;
+    let buttonDescLeftClass;
+    let buttonDescRightClass;
+
+    if (projectDisplayed === undefined) return;
+
+    if (!projectDisplayed.urlLive)
+      buttonDescLeftClass = sliderStyles.buttonDescLeft.disabled;
+    else if (buttonDescLeftHovered)
+      buttonDescLeftClass = sliderStyles.buttonDescLeft.highlight;
+    else buttonDescLeftClass = sliderStyles.buttonDescLeft.normal;
+
+    if (!projectDisplayed.urlCode)
+      buttonDescRightClass = sliderStyles.buttonDescRight.disabled;
+    else if (buttonDescRightHovered)
+      buttonDescRightClass = sliderStyles.buttonDescRight.highlight;
+    else buttonDescRightClass = sliderStyles.buttonDescRight.normal;
+
+    if (
+      buttonDescLeftClass !== this.state.buttonDescLeftClass ||
+      buttonDescRightClass !== this.state.buttonDescRightClass
+    )
+      this.setState({ buttonDescLeftClass, buttonDescRightClass });
+  };
 
   handleOnHover = () => {
     this.setState({
@@ -68,25 +109,34 @@ class SliderProjects extends Component {
       buttonRightClass: sliderStyles.buttonRight.normal,
     });
   };
+
+  handleButtonDescLeftClick = () => {
+    const url = this.state.projectDisplayed.urlLive;
+    if (!url) return;
+    window.open(url, "_blank").focus();
+  };
+
+  handleButtonDescRightClick = () => {
+    const url = this.state.projectDisplayed.urlCode;
+    if (!url) return;
+    window.open(url, "_blank").focus();
+  };
+
   handleButtonDescLeftOnHover = () => {
-    this.setState({
-      buttonDescLeftClass: sliderStyles.buttonDescLeft.highlight,
-    });
+    if (this.state.buttonDescLeftHovered) return;
+    this.setState({ buttonDescLeftHovered: true });
   };
   handleButtonDescLeftOnUnhover = () => {
-    this.setState({
-      buttonDescLeftClass: sliderStyles.buttonDescLeft.normal,
-    });
+    if (!this.state.buttonDescLeftHovered) return;
+    this.setState({ buttonDescLeftHovered: false });
   };
   handleButtonDescRightOnHover = () => {
-    this.setState({
-      buttonDescRightClass: sliderStyles.buttonDescRight.highlight,
-    });
+    if (this.state.buttonDescRightHovered) return;
+    this.setState({ buttonDescRightHovered: true });
   };
   handleButtonDescRightOnUnhover = () => {
-    this.setState({
-      buttonDescRightClass: sliderStyles.buttonDescRight.normal,
-    });
+    if (!this.state.buttonDescRightHovered) return;
+    this.setState({ buttonDescRightHovered: false });
   };
   handleHoverLeft = () => {
     this.setState({
@@ -142,9 +192,8 @@ class SliderProjects extends Component {
   };
 
   render() {
-    const project = this.state.projectDisplayed;
-
     const {
+      projectDisplayed,
       buttonLeftClass,
       buttonRightClass,
       buttonDescLeftClass,
@@ -174,23 +223,25 @@ class SliderProjects extends Component {
             onEntered={() => this.handleRefreshSlideReadiness()}
             classNames={slideAnimStyle}
             timeout={this.state.slideAnimTime}
-            key={project._id}
+            key={projectDisplayed._id}
           >
             <div className="slideContainer">
               <div className="slideContainerSmall">
                 <SliderSlide
-                  projectImg={project.urlImgMain}
-                  altText={project.name}
+                  projectImg={projectDisplayed.urlImgMain}
+                  altText={projectDisplayed.name}
                 />
                 <SliderDesc
+                  onButtonDescLeftClick={this.handleButtonDescLeftClick}
+                  onButtonDescRightClick={this.handleButtonDescRightClick}
                   buttonDescLeftOnHover={this.handleButtonDescLeftOnHover}
                   buttonDescLeftOnUnhover={this.handleButtonDescLeftOnUnhover}
                   buttonDescRightOnHover={this.handleButtonDescRightOnHover}
                   buttonDescRightOnUnhover={this.handleButtonDescRightOnUnhover}
                   buttonDescLeftClass={buttonDescLeftClass}
                   buttonDescRightClass={buttonDescRightClass}
-                  projectName={project.name}
-                  projectDesc={project.descriptionShort}
+                  projectName={projectDisplayed.name}
+                  projectDesc={projectDisplayed.description}
                 />
               </div>
             </div>

@@ -46,6 +46,7 @@ const groupItem = {
 };
 
 const projectCardLinks = {
+  disabled: "projectCardLinksLink projectCardLinksLinkDisabled",
   normal: "projectCardLinksLink projectCardLinksLinkNormal",
   selected: "projectCardLinksLink projectCardLinksLinkHighlight",
 };

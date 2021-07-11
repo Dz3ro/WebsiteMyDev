@@ -55,26 +55,38 @@ const httpHandler = {
 
   projectPost: async function (project) {
     const toSend = _.omit(project, ["_id", "__v"]);
-    const toolsArr = toSend.tools.split(",");
+    const toolsArr = toSend.tools.toString().split(",");
     toSend.tools = toolsArr;
-    const linksArr = toSend.urlImgAll.split(",");
+    const linksArr = toSend.urlImgAll.toString().split(",");
     toSend.urlImgAll = linksArr;
+
+    for (const key in toSend) {
+      const element = toSend[key];
+      if (!element) delete toSend[key];
+      else if (!element.toString().trim()) delete toSend[key];
+    }
+
     return await instance.post(projectsUrl, toSend);
   },
 
   projectUpdate: async function (project) {
     const projectId = project._id;
     const toSend = _.omit(project, ["_id", "__v"]);
-    const toolsArr = toSend.tools.split(",");
+    const toolsArr = toSend.tools.toString().split(",");
     toSend.tools = toolsArr;
-    const linksArr = toSend.urlImgAll.split(",");
+    const linksArr = toSend.urlImgAll.toString().split(",");
     toSend.urlImgAll = linksArr;
+
+    for (const key in toSend) {
+      const element = toSend[key];
+      if (!element) delete toSend[key];
+      else if (!element.toString().trim()) delete toSend[key];
+    }
     return await instance.put(`${projectsUrl}/${projectId}`, toSend);
   },
 
   projectDelete: async function (project) {
     const projectId = project._id;
-    console.log(projectId);
     return await instance.delete(`${projectsUrl}/${projectId}`);
   },
 };
